@@ -13,10 +13,10 @@ title_label = Label(
     text='CÁC THUẬT TOÁN KHAI THÁC DỮ LIỆU',
     fg='#FDFEFE',
     bg='#1C2833',
-    font=('Cambria', 28, 'bold'),
-    pady=20
+    font=('Cambria', 20, 'bold'),
+    pady=4
 )
-title_label.pack(pady=10)
+title_label.pack(pady=2)
 
 # Tạo khung chứa các frame con với khoảng cách hai bên
 container = Frame(root, bg='#1C2833')
@@ -25,12 +25,15 @@ container.grid_columnconfigure(0, weight=1)
 container.grid_columnconfigure(2, weight=1)
 
 inner_frame = Frame(container, bg='#1C2833')
-inner_frame.grid(row=0, column=1, padx=20, pady=20, sticky='nsew')
+inner_frame.grid(row=0, column=1, padx=10, pady=10, sticky='nsew')
 
 main_frame = Frame(inner_frame, bg='#2E4053', bd=5, relief=RIDGE)
 main_frame.grid(row=0, column=0, sticky='nsew')
 
 # Tạo các frame con
+xulydulieu_frame = Frame(inner_frame, bg='#2E4053', bd=5, relief=RIDGE)
+xulydulieu_frame.grid(row=0, column=0, sticky='nsew')
+
 apriori_frame = Frame(inner_frame, bg='#2E4053', bd=5, relief=RIDGE)
 apriori_frame.grid(row=0, column=0, sticky='nsew')
 
@@ -56,9 +59,9 @@ def create_algorithm_group(parent, title, buttons):
         text=title,
         bg='#34495E',
         fg='#ECF0F1',
-        font=('Cambria', 16, 'bold'),
+        font=('Cambria', 15, 'bold'),
         relief=RIDGE,
-        bd=4
+        bd=2
     )
     section_frame.pack(fill=X, pady=10, padx=10)
 
@@ -79,6 +82,7 @@ def create_algorithm_group(parent, title, buttons):
         ).grid(row=0, column=i, padx=10, pady=10)
 
 # Tạo nhóm thuật toán trong main_frame
+create_algorithm_group(main_frame, 'Xử lý dữ liệu', [('Xử lý dữ liệu', '#70635f', xulydulieu_frame)])
 create_algorithm_group(main_frame, 'Thuật toán Apriori', [('Apriori', '#1ABC9C', apriori_frame)])
 create_algorithm_group(main_frame, 'Thuật toán tập thô', [('Tập thô', '#6699FF', tap_tho_frame)])
 create_algorithm_group(
@@ -105,6 +109,7 @@ def add_back_button(frame, main_frame):
         command=lambda: show_frame(main_frame)
     ).pack(pady=20)
 
+add_back_button(xulydulieu_frame, main_frame)
 add_back_button(apriori_frame, main_frame)
 add_back_button(tap_tho_frame, main_frame)
 add_back_button(id3_frame, main_frame)
