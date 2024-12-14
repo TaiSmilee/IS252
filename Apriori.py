@@ -4,6 +4,7 @@ import pandas as pd
 from itertools import combinations
 from typing import List, Dict, Union, Tuple, FrozenSet, Optional
 
+# Tạo hàm chạy thuật toán Apriori
 def generate_frequent_itemsets(basket: pd.DataFrame, min_support: float) -> List[Tuple[FrozenSet[int], float]]:
     item_support: Dict[FrozenSet[int], float] = {}
     n_transactions: int = len(basket)
@@ -46,8 +47,6 @@ def generate_association_rules(frequent_itemsets: List[Tuple[FrozenSet[int], flo
 
         for consequence in itemset:
             antecedent: FrozenSet[int] = itemset - frozenset([consequence])
-
-            # Truy xuất antecedent_support một cách an toàn
             antecedent_support: Optional[float] = next((s for i, s in frequent_itemsets if i == antecedent), None)
             if antecedent_support is None:
                 continue
@@ -67,7 +66,7 @@ def upload_file() -> None:
     global file_path
     file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
     if file_path:
-        label_file_path.config(text=f"\u0110ã chọn: {file_path}")
+        label_file_path.config(text=f"Đã chọn: {file_path}")
     else:
         label_file_path.config(text="Chưa chọn file.")
 
@@ -88,7 +87,7 @@ def run_apriori() -> None:
         min_supp: float = float(entry_min_supp.get())
         min_conf: float = float(entry_min_conf.get())
         if not (0 < min_supp <= 1) or not (0 < min_conf <= 1):
-            raise ValueError("Giá trị min_supp và min_conf phải nằm trong khoảng (0, 1].")
+            raise ValueError("min_supp và min_conf phải nằm trong khoảng (0, 1].")
         
         frequent_itemsets: List[Tuple[FrozenSet[int], float]] = generate_frequent_itemsets(basket, min_supp)
         print("Frequent Itemsets:")
@@ -103,7 +102,7 @@ def run_apriori() -> None:
         else:
             output_window: tk.Toplevel = tk.Toplevel(root)
             output_window.title("Kết quả")
-            text: tk.Text = tk.Text(output_window, wrap=tk.WORD, height=30, width=100)
+            text: tk.Text = tk.Text(output_window, wrap=tk.WORD, height=30, width=80, bg="#1C2833", fg="white")
             text.pack()
             for rule in rules:
                 text.insert(tk.END, f"{rule['antecedent']} => {rule['consequence']}\n")
@@ -114,35 +113,38 @@ def run_apriori() -> None:
 # Tạo giao diện Tkinter
 root: tk.Tk = tk.Tk()
 root.title("Thuật toán Apriori")
-root.geometry("400x300")
-root.resizable(False, False)
+root.geometry("500x400")
+root.configure(bg="#1C2833")
 
 file_path: str = ""
 
+# Tiêu đề
+title_label = tk.Label(root, text="THUẬT TOÁN APRIORI", font=("Cambria", 18, "bold"), bg="#1C2833", fg="white")
+title_label.pack(pady=10)
+
 # Nút tải file
-button_upload: tk.Button = tk.Button(root, text="Tải file Excel", command=upload_file)
-button_upload.pack()
+button_upload = tk.Button(root, text="Tải file Excel", command=upload_file, bg="#2E4053", fg="white", font=("Cambria", 12))
+button_upload.pack(pady=5)
 
-# Nhãn hiển thị đường dẫn file
-label_file_path: tk.Label = tk.Label(root, text="Chưa chọn file.")
-label_file_path.pack()
+# Đường dẫn file
+label_file_path = tk.Label(root, text="Chưa chọn file.", bg="#1C2833", fg="white", font=("Cambria", 10))
+label_file_path.pack(pady=5)
 
-# Nhãn và ô nhập cho min_support
-label_min_supp: tk.Label = tk.Label(root, text="Ngưỡng min_supp:")
-label_min_supp.pack()
-entry_min_supp: tk.Entry = tk.Entry(root)
+# Min Support Input
+label_min_supp = tk.Label(root, text="Ngưỡng min_supp:", bg="#1C2833", fg="white", font=("Cambria", 12))
+label_min_supp.pack(pady=5)
+entry_min_supp = tk.Entry(root, font=("Cambria", 12), bg="#2E4053", fg="white", justify="center")
 entry_min_supp.pack()
 
-# Nhãn và ô nhập cho min_conf
-label_min_conf: tk.Label = tk.Label(root, text="Ngưỡng min_conf:")
-label_min_conf.pack()
-entry_min_conf: tk.Entry = tk.Entry(root)
+# Min Confidence Input
+label_min_conf = tk.Label(root, text="Ngưỡng min_conf:", bg="#1C2833", fg="white", font=("Cambria", 12))
+label_min_conf.pack(pady=5)
+entry_min_conf = tk.Entry(root, font=("Cambria", 12), bg="#2E4053", fg="white", justify="center")
 entry_min_conf.pack()
 
 # Nút chạy thuật toán
-button_run: tk.Button = tk.Button(root, text="Chạy thuật toán", command=run_apriori)
-button_run.pack()
+button_run = tk.Button(root, text="Chạy thuật toán", command=run_apriori, bg="#2E4053", fg="white", font=("Cambria", 12, "bold"))
+button_run.pack(pady=20)
 
-# Chạy ứng dụng Tkinter
+# Chạy ứng dụng
 root.mainloop()
-
