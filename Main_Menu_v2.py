@@ -69,7 +69,7 @@ def create_algorithm_group(parent, title, buttons):
 # Tạo nhóm thuật toán trong main_frame
 create_algorithm_group(main_frame, 'Xử lý dữ liệu', [('Xử lý dữ liệu', '#70635f', '.py')])
 create_algorithm_group(main_frame, 'Thuật toán Apriori', [('Apriori', '#1ABC9C', 'Apriori.py')])
-create_algorithm_group(main_frame, 'Thuật toán tập thô', [('Tập thô', '#6699FF', '.py')])
+create_algorithm_group(main_frame, 'Thuật toán tập thô', [('Tập thô', '#6699FF', 'Rough_set.py')])
 create_algorithm_group(
     main_frame,
     'Thuật toán phân lớp',
