@@ -78,7 +78,7 @@ create_algorithm_group(
 create_algorithm_group(
     main_frame,
     'Thuật toán gom cụm',
-    [('K-means', '#E67E22', '.py'), ('Mạng Kohonen', '#E67E22', '.py')]
+    [('K-means', '#E67E22', '.py'), ('Mạng Kohonen', '#E67E22', 'Konohen.py')]
 )
 
 # Footer
