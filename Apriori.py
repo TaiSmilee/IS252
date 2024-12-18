@@ -5,13 +5,13 @@ from itertools import combinations
 from typing import List, Dict, Union, Tuple, FrozenSet, Optional
 
 # Tạo hàm chạy thuật toán Apriori
-def generate_frequent_itemsets(basket: pd.DataFrame, min_support: float) -> List[Tuple[FrozenSet[int], float]]:
+def generate_frequent_itemsets(matrix: pd.DataFrame, min_support: float) -> List[Tuple[FrozenSet[int], float]]:
     item_support: Dict[FrozenSet[int], float] = {}
-    n_transactions: int = len(basket)
+    n_transactions: int = len(matrix)
 
     # Tính support cho từng item
-    for column in basket.columns:
-        support: float = basket[column].sum() / n_transactions
+    for column in matrix.columns:
+        support: float = matrix[column].sum() / n_transactions
         if support >= min_support:
             item_support[frozenset([column])] = support
 
@@ -25,7 +25,7 @@ def generate_frequent_itemsets(basket: pd.DataFrame, min_support: float) -> List
 
         for candidate in candidates:
             candidate_set: FrozenSet[int] = frozenset(candidate)
-            support: float = basket[list(candidate)].all(axis=1).sum() / n_transactions
+            support: float = matrix[list(candidate)].all(axis=1).sum() / n_transactions
             if support >= min_support:
                 candidate_support[candidate_set] = support
 
@@ -79,17 +79,17 @@ def run_apriori() -> None:
         if 'order_id' not in df.columns or 'product_id' not in df.columns:
             raise ValueError("File Excel phải chứa các cột 'order_id' và 'product_id'.")
 
-        basket: pd.DataFrame = df.groupby(['order_id', 'product_id']).size().unstack(fill_value=0)
-        basket = (basket > 0).astype(int)
+        matrix: pd.DataFrame = df.groupby(['order_id', 'product_id']).size().unstack(fill_value=0)
+        matrix = (matrix > 0).astype(int)
         print("Basket DataFrame:")
-        print(basket.head())  # Kiểm tra dữ liệu
+        print(matrix.head())  # Kiểm tra dữ liệu
 
         min_supp: float = float(entry_min_supp.get())
         min_conf: float = float(entry_min_conf.get())
         if not (0 < min_supp <= 1) or not (0 < min_conf <= 1):
             raise ValueError("min_supp và min_conf phải nằm trong khoảng (0, 1].")
         
-        frequent_itemsets: List[Tuple[FrozenSet[int], float]] = generate_frequent_itemsets(basket, min_supp)
+        frequent_itemsets: List[Tuple[FrozenSet[int], float]] = generate_frequent_itemsets(matrix, min_supp)
         print("Frequent Itemsets:")
         print(frequent_itemsets)  # Kiểm tra đầu ra
 
@@ -148,3 +148,4 @@ button_run.pack(pady=20)
 
 # Chạy ứng dụng
 root.mainloop()
+
