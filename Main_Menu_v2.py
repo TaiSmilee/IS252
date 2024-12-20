@@ -67,13 +67,13 @@ def create_algorithm_group(parent, title, buttons):
         ).grid(row=0, column=i, padx=10, pady=10)
 
 # Tạo nhóm thuật toán trong main_frame
-create_algorithm_group(main_frame, 'Xử lý dữ liệu', [('Xử lý dữ liệu', '#70635f', 'TienXuLyDuLieu.py')])
+create_algorithm_group(main_frame, 'Hệ số tương quan', [('Hệ số tương quan', '#70635f', 'HeSoTuongQuan.py')])
 create_algorithm_group(main_frame, 'Thuật toán Apriori', [('Apriori', '#1ABC9C', 'Apriori.py')])
 create_algorithm_group(main_frame, 'Thuật toán tập thô', [('Tập thô', '#6699FF', 'Rough_set.py')])
 create_algorithm_group(
     main_frame,
     'Thuật toán phân lớp',
-    [('ID3 - Cây quyết định', '#3498DB', 'ID3.py'), ('Naive Bayes', '#3498DB', 'NaiveBayes.py')]
+    [('Cây quyết định', '#3498DB', 'CayQuyetDinh.py'), ('Naive Bayes', '#3498DB', 'NaiveBayes.py')]
 )
 create_algorithm_group(
     main_frame,
